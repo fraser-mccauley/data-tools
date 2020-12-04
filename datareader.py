@@ -32,6 +32,12 @@ class DataSet():
             for i in range(len(self.data_points)):
                 self.data_points[i][n] = float(self.data_points[i][n])
 
+    # converts values in specified columns to int. indices argument is a list of column indices to convert.
+    def read_as_int(self, indices: list):
+        for n in indices:
+            for i in range(len(self.data_points)):
+                self.data_points[i][n] = int(self.data_points[i][n])
+
     # converts values in specified columns to standard datetime strings. use must define the input date format.
     def read_as_date(self, indices: list, d_format: str):
 
@@ -49,3 +55,11 @@ class DataSet():
                 for i in range(0,len(time_type_list)):
                     time_list.append(int(self.data_points[a][indices[n]][index_list[i]:index_list[i]+count_list[i]]))
                 self.data_points[a][indices[n]] = str(datetime.datetime(*time_list))
+
+def vector_from_data(data: DataSet,column: int):
+
+    vector = []
+    for i in data.data_points:
+        vector.append(i[column])
+
+    return vector
