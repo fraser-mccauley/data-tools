@@ -1,5 +1,5 @@
 
-# importing standard modules
+# importing modules
 import csv
 import datetime
 
@@ -56,10 +56,21 @@ class DataSet():
                     time_list.append(int(self.data_points[a][indices[n]][index_list[i]:index_list[i]+count_list[i]]))
                 self.data_points[a][indices[n]] = str(datetime.datetime(*time_list))
 
-def vector_from_data(data: DataSet,column: int):
+
+# extracts a column from a DataSet in list format
+def make_vector(data: DataSet, column: int, statistics: bool=False):
 
     vector = []
     for i in data.data_points:
         vector.append(i[column])
 
-    return vector
+    for i in vector:
+        try:
+            float(i)
+        except ValueError:
+            print('WARNING: Vector contains non-numerical values.')
+    if statistics:
+        return vector, [len(vector), max(vector), min(vector), sum(vector) / len(vector)]
+    else:
+        return vector
+  
